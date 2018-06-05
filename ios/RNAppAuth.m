@@ -3,7 +3,6 @@
 #import <AppAuth/AppAuth.h>
 #import <React/RCTLog.h>
 #import <React/RCTConvert.h>
-#import "AppDelegate.h"
 
 @implementation RNAppAuth
 
@@ -145,11 +144,15 @@ RCT_REMAP_METHOD(refresh,
 
 
     // performs authentication request
-    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    id <RNAppAuthApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
 
-    appDelegate.currentAuthorizationFlow =
+//    if (![appDelegate conformsToProtocol:@protocol(RNAppAuthApplicationDelegate)]) {
+//        reject(@"RNAppAuth Error");
+//    }
+    
+    [appDelegate setCurrentAuthorizationFlow:
     [OIDAuthState authStateByPresentingAuthorizationRequest:request
-                                   presentingViewController:appDelegate.window.rootViewController
+                                   presentingViewController:[appDelegate getRootView]
                                                    callback:^(OIDAuthState *_Nullable authState,
                                                               NSError *_Nullable error) {
                                                        if (authState) {
@@ -158,7 +161,7 @@ RCT_REMAP_METHOD(refresh,
                                                            reject(@"RNAppAuth Error", [error localizedDescription], error);
                                                        }
 
-                                                   }]; // end [OIDAuthState authStateByPresentingAuthorizationRequest:request
+                                                   }]]; // end [OIDAuthState authStateByPresentingAuthorizationRequest:request
 }
 
 

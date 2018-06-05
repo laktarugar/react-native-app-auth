@@ -8,11 +8,9 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <RNAppAuth.h>
 
-@protocol OIDAuthorizationFlowSession;
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
-@property(nonatomic, strong, nullable) id<OIDAuthorizationFlowSession> currentAuthorizationFlow;
+@interface AppDelegate : UIResponder <UIApplicationDelegate, RNAppAuthApplicationDelegate>
 @property (nonatomic, strong, nullable) UIWindow *window;
 
 @end

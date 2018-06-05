@@ -14,6 +14,9 @@
 #import <AppAuth/AppAuth.h>
 
 @implementation AppDelegate
+{
+  id<OIDAuthorizationFlowSession> _currentAuthorizationFlow;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -43,6 +46,14 @@
     return YES;
   }
   return NO;
+}
+
+- (UIViewController *)getRootView {
+    return self.window.rootViewController;
+}
+
+- (void)setCurrentAuthorizationFlow:(id)currentAuthorizationFlow {
+  _currentAuthorizationFlow = currentAuthorizationFlow;
 }
 
 @end
